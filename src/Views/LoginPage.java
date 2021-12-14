@@ -1,76 +1,86 @@
 package Views;
 
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.swt.widgets.Text;
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Group;
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+
+import Controller.LoginController;
+
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class LoginPage {
 
-	protected Shell shell;
-	private Text username;
-	private Text password;
+	private JFrame frame;
+	private JTextField username;
+	private JPasswordField password;
 
 	/**
 	 * Launch the application.
-	 * @param args
 	 */
 	public static void main(String[] args) {
-		try {
-			LoginPage window = new LoginPage();
-			window.open();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Open the window.
-	 */
-	public void open() {
-		Display display = Display.getDefault();
-		createContents();
-		shell.open();
-		shell.layout();
-		while (!shell.isDisposed()) {
-			if (!display.readAndDispatch()) {
-				display.sleep();
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					LoginPage window = new LoginPage();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			}
-		}
+		});
 	}
 
 	/**
-	 * Create contents of the window.
+	 * Create the application.
 	 */
-	protected void createContents() {
-		shell = new Shell();
-		shell.setSize(465, 348);
-		shell.setText("CoffeeVibes");
-		
-		Label lblUsername = new Label(shell, SWT.NONE);
-		lblUsername.setBounds(63, 67, 70, 20);
-		lblUsername.setText("Username");
-		
-		Label lblPassword = new Label(shell, SWT.NONE);
-		lblPassword.setBounds(63, 113, 70, 20);
-		lblPassword.setText("Password");
-		
-		username = new Text(shell, SWT.BORDER);
-		username.setBounds(175, 67, 154, 26);
-		
-		password = new Text(shell, SWT.BORDER);
-		password.setBounds(175, 107, 154, 26);
-		
-		Button btnLogin = new Button(shell, SWT.NONE);
-		btnLogin.setBounds(77, 176, 90, 30);
-		btnLogin.setText("Login");
-		
-		Button btnReset = new Button(shell, SWT.NONE);
-		btnReset.setBounds(239, 176, 90, 30);
-		btnReset.setText("Reset");
+	public LoginPage() {
+		initialize();
+	}
 
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 450, 300);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setBounds(78, 66, 73, 16);
+		frame.getContentPane().add(lblUsername);
+		
+		username = new JTextField();
+		username.setBounds(169, 66, 148, 22);
+		frame.getContentPane().add(username);
+		username.setColumns(10);
+		
+		JLabel lblNewLabel = new JLabel("Password");
+		lblNewLabel.setBounds(81, 111, 56, 16);
+		frame.getContentPane().add(lblNewLabel);
+		
+		JButton btnLogin = new JButton("Login");
+		btnLogin.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				LoginController.Login(username.getText(),password.getText());
+			}
+		});
+		btnLogin.setBounds(90, 167, 97, 25);
+		frame.getContentPane().add(btnLogin);
+		
+		JButton btnReset = new JButton("Reset");
+		btnReset.setBounds(221, 167, 97, 25);
+		frame.getContentPane().add(btnReset);
+		
+		password = new JPasswordField();
+		password.setBounds(169, 108, 148, 23);
+		frame.getContentPane().add(password);
+		frame.setVisible(true);
 	}
 }

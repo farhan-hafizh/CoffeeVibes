@@ -64,7 +64,7 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Employee insertEmployere(String name, int position_id, int salary, String username, String password) {
+	public Employee insertEmployee(String name, int position_id, int salary, String username, String password) {
 		String status = "active";
 		String query = "INSERT INTO employees (employeeID, positionID, name, status, salary, username, password) VALUES "
 				+ "(NULL, '"+position_id+"', '"+name+"', '"+status+"', '"+salary+"', '"+username+"', '"+password+"') ";
@@ -88,7 +88,7 @@ public class Employee {
 		
 		return emp;
 	}
-	public List<Employee> getAllEmployees() {
+	public static List<Employee> getAllEmployees() {
 		int position_id,salary;
 		String name,status,username,password;
 		Employee emp;
@@ -115,7 +115,32 @@ public class Employee {
 		
 		return data;
 	}
-	public Employee getEmployee(String username) {
+	public static Employee getEmployee(String username,String password) {
+		int position_id,salary;
+		String name,status;
+		Employee emp=null;
+		String query;
 		
+		if(password != null) {
+			query = "SELECT * FROM employees emp WHERE emp.username='"+username+"' AND emp.password='"+password+"'";
+		}else {
+			query = "SELECT * FROM employees emp WHERE emp.username='"+username+"'";
+		}
+		ResultSet rs = Connect.getConnection().execute(query);
+		try {
+			while(rs.next()) {
+				position_id=rs.getInt("positionID");
+				name=rs.getString("name");
+				status=rs.getString("status");
+				salary=rs.getInt("salary");
+				username=rs.getString("username");
+				password=rs.getString("password");
+				emp=new Employee(position_id, salary, name, status, username, password);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return emp;
 	}
 }
