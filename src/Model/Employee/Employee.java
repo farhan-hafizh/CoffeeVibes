@@ -1,4 +1,4 @@
-package Model;
+package Model.Employee;
 
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -8,31 +8,31 @@ import java.util.List;
 import Database.Connect;
 
 public class Employee {
-	private int position_id,salary;
+	private int employeeId,positionId,salary;
 	private String name,status,username,password;
 	
 	
-	private Employee( int position_id, int salary, String name, String status, String username,
+	protected Employee( int employeeId,int positionId, int salary, String name, String status, String username,
 			String password) {
-//		this.employee_id = employee_id;
-		this.position_id = position_id;
+		this.employeeId = employeeId;
+		this.positionId = positionId;
 		this.salary = salary;
 		this.name = name;
 		this.status = status;
 		this.username = username;
 		this.password = password;
 	}
-//	public int getEmployee_id() {
-//		return employee_id;
-//	}
-//	public void setEmployee_id(int employee_id) {
-//		this.employee_id = employee_id;
-//	}
-	public int getPosition_id() {
-		return position_id;
+	public int getEmployeId() {
+		return employeeId;
 	}
-	public void setPosition_id(int position_id) {
-		this.position_id = position_id;
+	public void setEmployee_id(int employeeId) {
+		this.employeeId = employeeId;
+	}
+	public int getPositionId() {
+		return positionId;
+	}
+	public void setPositionId(int positionId) {
+		this.positionId = positionId;
 	}
 	public int getSalary() {
 		return salary;
@@ -64,16 +64,16 @@ public class Employee {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Employee insertEmployee(String name, int position_id, int salary, String username, String password) {
+	public Employee insertEmployee(String name, int positionId, int salary, String username, String password) {
 		String status = "active";
 		String query = "INSERT INTO employees (employeeID, positionID, name, status, salary, username, password) VALUES "
-				+ "(NULL, '"+position_id+"', '"+name+"', '"+status+"', '"+salary+"', '"+username+"', '"+password+"') ";
+				+ "(NULL, '"+positionId+"', '"+name+"', '"+status+"', '"+salary+"', '"+username+"', '"+password+"') ";
 		ResultSet rs= Connect.getConnection().execute(query);
 		
 		try {
 			rs.next();//move to data
 //			employee_id=rs.getInt("employeeID");
-			position_id=rs.getInt("positionID");
+			positionId=rs.getInt("positionID");
 			name=rs.getString("name");
 			status=rs.getString("status");
 			salary=rs.getInt("salary");
@@ -84,12 +84,12 @@ public class Employee {
 			e.printStackTrace();
 		}
 		
-		Employee emp = new Employee(position_id, salary, name, status, username, password);
+		Employee emp = new Employee(employeeId,positionId, salary, name, status, username, password);
 		
 		return emp;
 	}
 	public static List<Employee> getAllEmployees() {
-		int position_id,salary;
+		int employeeId,positionId,salary;
 		String name,status,username,password;
 		Employee emp;
 		
@@ -99,13 +99,14 @@ public class Employee {
 		try {
 			while(rs.next()) {
 //				employee_id=rs.getInt("employeeID");
-				position_id=rs.getInt("positionID");
+				positionId=rs.getInt("positionID");
 				name=rs.getString("name");
 				status=rs.getString("status");
 				salary=rs.getInt("salary");
 				username=rs.getString("username");
 				password=rs.getString("password");
-				emp=new Employee(position_id, salary, name, status, username, password);
+				employeeId=rs.getInt("employeeID");
+				emp=new Employee(employeeId,positionId, salary, name, status, username, password);
 				data.add(emp);
 			}
 		} catch (SQLException e) {
@@ -116,7 +117,7 @@ public class Employee {
 		return data;
 	}
 	public static Employee getEmployee(String username,String password) {
-		int position_id,salary;
+		int employeeId,positionId,salary;
 		String name,status;
 		Employee emp=null;
 		String query;
@@ -129,13 +130,21 @@ public class Employee {
 		ResultSet rs = Connect.getConnection().execute(query);
 		try {
 			while(rs.next()) {
-				position_id=rs.getInt("positionID");
+				positionId=rs.getInt("positionID");
 				name=rs.getString("name");
 				status=rs.getString("status");
 				salary=rs.getInt("salary");
 				username=rs.getString("username");
 				password=rs.getString("password");
-				emp=new Employee(position_id, salary, name, status, username, password);
+				employeeId=rs.getInt("employeeID");
+				if(positionId==1)
+					emp=new Barista(employeeId,positionId, salary, name, status, username, password);
+				else if(positionId==2)
+					emp=new ProductAdmin(employeeId,positionId, salary, name, status, username, password);
+				else if(positionId==3)
+					emp=new Manager(employeeId,positionId, salary, name, status, username, password);
+				else
+					emp=new HRD(employeeId,positionId, salary, name, status, username, password);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

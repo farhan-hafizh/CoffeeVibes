@@ -1,25 +1,39 @@
 package Controller;
 
 
-import Model.Employee;
+import Model.Employee.Barista;
+import Model.Employee.Employee;
+import Model.Employee.HRD;
+import Model.Employee.Manager;
+import Session.LoginSession;
 import Views.LoginPage;
 
 
 public class LoginController {
-	private static LoginPage loginPage;
+	private static LoginPage loginPage=null;
 
 	public LoginController() {
 		
 	}
-	public static void displayLoginView() {
-		loginPage = new LoginPage();
+	public static LoginPage displayLoginView() {
+		if(loginPage == null)
+			loginPage = new LoginPage();
+		return loginPage;
 	}
 	public static void Login(String username, String password) {
-		System.out.println("b");
 		Employee emp = Employee.getEmployee(username, password);
 
 		if(emp != null) {
-			System.out.println("a");
+			new LoginSession(emp);
+			if(emp instanceof Barista) {
+				System.out.println("asa");
+			}else if(emp instanceof HRD) {
+				System.out.println("asa");
+			}else if(emp instanceof Manager) {
+				System.out.println("asa");
+			}else{
+				System.out.println("asa");
+			}
 		};
 	}
 }

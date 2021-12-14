@@ -1,16 +1,27 @@
 package Session;
 
+import Model.Employee.Employee;
+
 public class LoginSession {
-	private static int employeeId,positionId;
-	private static String name,status,salary,username,password;
+	private static int positionId,salary;
+	private static String name,status,username,password;
+
 	
+	public LoginSession(Employee emp) {
+		positionId=emp.getPositionId();
+		name= emp.getName();
+		status=emp.getStatus();
+		salary=emp.getSalary();
+		username=emp.getUsername();
+		password=emp.getPassword();
+	}
 	
-	public static int getEmployeeId() {
-		return employeeId;
-	}
-	public static void setEmployeeId(int employeeId) {
-		LoginSession.employeeId = employeeId;
-	}
+//	public static int getEmployeeId() {
+//		return employeeId;
+//	}
+//	public static void setEmployeeId(int employeeId) {
+//		LoginSession.employeeId = employeeId;
+//	}
 	public static int getPositionId() {
 		return positionId;
 	}
@@ -29,10 +40,10 @@ public class LoginSession {
 	public static void setStatus(String status) {
 		LoginSession.status = status;
 	}
-	public static String getSalary() {
+	public static int getSalary() {
 		return salary;
 	}
-	public static void setSalary(String salary) {
+	public static void setSalary(int salary) {
 		LoginSession.salary = salary;
 	}
 	public static String getUsername() {
