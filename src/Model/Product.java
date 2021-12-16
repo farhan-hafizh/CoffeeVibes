@@ -1,48 +1,68 @@
 package Model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import Database.Connect;
+
 public class Product {
-	private int product_id,product_price,product_stock;
-	private String product_name, product_description;
+	private int productId,productPrice,productStock;
+	private String productName, productDescription;
 	
-	public Product(int product_id, int product_price, int product_stock, String product_name,
-			String product_description) {
-		
-		this.product_id = product_id;
-		this.product_price = product_price;
-		this.product_stock = product_stock;
-		this.product_name = product_name;
-		this.product_description = product_description;
-	
-	}
-	public int getProduct_id() {
-		return product_id;
-	}
-	public void setProduct_id(int product_id) {
-		this.product_id = product_id;
-	}
-	public int getProduct_price() {
-		return product_price;
-	}
-	public void setProduct_price(int product_price) {
-		this.product_price = product_price;
-	}
-	public int getProduct_stock() {
-		return product_stock;
-	}
-	public void setProduct_stock(int product_stock) {
-		this.product_stock = product_stock;
-	}
-	public String getProduct_name() {
-		return product_name;
-	}
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
-	}
-	public String getProduct_description() {
-		return product_description;
-	}
-	public void setProduct_description(String product_description) {
-		this.product_description = product_description;
+	public Product(int productId, int productPrice, int productStock, String productName, String productDescription) {
+		super();
+		this.productId = productId;
+		this.productPrice = productPrice;
+		this.productStock = productStock;
+		this.productName = productName;
+		this.productDescription = productDescription;
 	}
 	
+	public int getProductId() {
+		return productId;
+	}
+	public void setProductId(int productId) {
+		this.productId = productId;
+	}
+	public int getProductPrice() {
+		return productPrice;
+	}
+	public void setProductPrice(int productPrice) {
+		this.productPrice = productPrice;
+	}
+	public int getProductStock() {
+		return productStock;
+	}
+	public void setProductStock(int productStock) {
+		this.productStock = productStock;
+	}
+	public String getProductName() {
+		return productName;
+	}
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+	public String getProductDescription() {
+		return productDescription;
+	}
+	public void setProductDescription(String productDescription) {
+		this.productDescription = productDescription;
+	}
+	
+	public static Product getProduct(int productId) {
+		ResultSet rs;
+		Product product = null;
+		String query="SELECT * FROM products WHERE products.productID="+productId;
+		rs=Connect.getConnection().execute(query);
+		try {
+			while(rs.next()) {
+				product = new Product(productId, rs.getInt("price"), rs.getInt("stock")
+						, rs.getString("name"), rs.getString("description"));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return product;
+	}	
 }

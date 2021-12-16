@@ -16,9 +16,31 @@ import javax.swing.JPasswordField;
 
 public class LoginPage {
 
-	private JFrame frame;
+	private static JFrame frame;
+
+
 	private JTextField username;
 	private JPasswordField password;
+	
+	public static JFrame getFrame() {
+		return frame;
+	}
+	public JTextField getUsername() {
+		return username;
+	}
+
+	public void setUsername(JTextField username) {
+		this.username = username;
+	}
+
+	public JPasswordField getPassword() {
+		return password;
+	}
+
+	public void setPassword(JPasswordField password) {
+		this.password = password;
+	}
+
 
 	/**
 	 * Launch the application.
@@ -68,7 +90,7 @@ public class LoginPage {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				LoginController.Login(username.getText(),password.getText());
+				LoginController.Login();
 			}
 		});
 		btnLogin.setBounds(90, 167, 97, 25);
