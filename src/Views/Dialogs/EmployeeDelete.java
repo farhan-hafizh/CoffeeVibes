@@ -2,22 +2,18 @@ package Views.Dialogs;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Model.Employee.Employee;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-
-public class EmployeeInsert extends JDialog {
+public class EmployeeDelete extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 
@@ -26,8 +22,7 @@ public class EmployeeInsert extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			Employee emp=null;
-			EmployeeInsert dialog = new EmployeeInsert(emp);
+			EmployeeDelete dialog = new EmployeeDelete(true);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -38,7 +33,7 @@ public class EmployeeInsert extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public EmployeeInsert(Employee emp) {
+	public EmployeeDelete(boolean stat) {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -57,10 +52,10 @@ public class EmployeeInsert extends JDialog {
 			getRootPane().setDefaultButton(okButton);
 		}
 		{	
-			String notif="Error Adding Employee";
+			String notif="Error Deleting Employee";
 			String resource="/org/eclipse/jface/dialogs/images/message_error.png";
-			if(emp != null) {
-				notif="Employee "+emp.getName()+" Successfully Added!";
+			if(stat) {
+				notif="Employee Successfully Deleted!";
 				resource="/org/eclipse/jface/fieldassist/images/info_ovr@2x.png";
 			} 
 			JLabel lblNewLabel = new JLabel(notif);

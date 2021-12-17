@@ -107,10 +107,22 @@ public class Employee {
 		int insertStatus=0;
 		Employee emp=null;
 		String status = "active";
-		String query = String.format("INSERT INTO employees (employeeID, positionID, name, status, salary, username, password) VALUES "
-				+ "(NULL, %d, '%s', '%s', '%d', '%s', '%s') ", positionId,name, status, salary,username,password);
-//		System.out.println(query);
-		insertStatus=Connect.getConnection().executeUpdate(query);
+		String query = "INSERT INTO employees (employeeID, positionID, name, status, salary, username, password)"
+				+ " VALUES (NULL, ?, ?, ?, ?, ?, ?)";
+		PreparedStatement prep = Connect.getConnection().preparedStatement(query);
+		try {
+			prep.setInt(1, positionId);
+			prep.setString(2, name);
+			prep.setString(3, status);
+			prep.setInt(4, salary);
+			prep.setString(5, username);
+			prep.setString(5, password);
+			
+			insertStatus=prep.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		if(insertStatus!=0)
 			emp = getEmployee(username, password);
 		
@@ -139,15 +151,22 @@ public class Employee {
 	public static Employee getEmployee(String username,String password) {
 		Employee emp=null;
 		String query;
-		PreparedStatement prep= Connect.getConnection().prepareStatement();
+		ResultSet rs;
+		int flag=0;
 		if(password != null) {
-			query = String.format("SELECT * FROM employees emp WHERE emp.username='%s' AND emp.password='%s'", username,password);
-			
+			query = "SELECT * FROM employees WHERE username = ? AND password= ?";
+			flag=1;
 		}else {
-			query = String.format("SELECT * FROM employees emp WHERE emp.username='%s'", username);
+			query = "SELECT * FROM employees WHERE username=?";
 		}
-		ResultSet rs = Connect.getConnection().execute(query);
+		
+		PreparedStatement prep= Connect.getConnection().preparedStatement(query);			
 		try {
+			prep.setString(1, username);
+			if(flag==1) {
+				prep.setString(2, password);
+			}
+			rs = prep.executeQuery();
 			while(rs.next()) {
 				emp=setEmployee(rs);
 			}
@@ -155,6 +174,28 @@ public class Employee {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return emp;
+	}
+	//update employee
+	public static Employee updateEmployee(int employeeId, String name, int salary, String username, String password) {
+		Employee emp=null;
+		int updateStatus=0;
+		String query="UPDATE employees SET name = ?, salary = ?, username = ?, password = ? WHERE employeeID = ?";
+		PreparedStatement prep = Connect.getConnection().preparedStatement(query);
+		try {
+			prep.setString(1, name);
+			prep.setInt(2, salary);
+			prep.setString(3, username);
+			prep.setString(4, password);
+			prep.setInt(5, employeeId);
+			
+			updateStatus=prep.executeUpdate(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(updateStatus!=0)
+			emp = getEmployee(username, password);
 		return emp;
 	}
 }

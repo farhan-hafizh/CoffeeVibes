@@ -11,15 +11,19 @@ import Views.EmployeeManagementForm;
 
 public class EmployeeController {
 	
-	EmployeeManagementForm view=null;
+	private static EmployeeManagementForm view=null;
 	
 	public EmployeeController() {
 		
 	}
 	
 	
-	public void viewEmployeeManagementForm() {
+	public static void viewEmployeeManagementForm() {
 			view = new EmployeeManagementForm();
+	}
+	public static void viewHome() {
+		view.getFrame().dispose();
+		HomeController.viewHomePage();
 	}
 	public static boolean deleteEmployee(int employeeId) {
 		boolean deleteStatus= false;
@@ -35,12 +39,13 @@ public class EmployeeController {
 		Employee emp = Employee.getEmployee(username, null);
 		return emp;
 	}
-	public static Employee updateEmployee() {
+	public static Employee updateEmployee(int employeeId,JTextField name, JTextField salary, JTextField username, JTextField password) {
 		Employee emp=null;
+		emp=Employee.updateEmployee(employeeId,name.getText(),Integer.parseInt(salary.getText()),username.getText(),password.getText());
 		return emp;
 	}
 
-	public static boolean insertEmployee(List<Position> list,JTextField name, JComboBox position, JTextField salary, JTextField username,
+	public static Employee insertEmployee(List<Position> list,JTextField name, JComboBox position, JTextField salary, JTextField username,
 			JTextField password) {
 		// TODO Auto-generated method stub
 		String selectedPosition = (String) position.getSelectedItem();
@@ -52,11 +57,8 @@ public class EmployeeController {
 			}
 		}
 		Employee emp = Employee.insertEmployee(name.getText(), positionId, Integer.parseInt(salary.getText()), username.getText(), password.getText());
-		if(emp != null) {
-			return true;
-		}
-		return false;
 		
+		return emp;
 	}
 
 }

@@ -7,9 +7,26 @@ import Model.CartItem;
 import Model.Product;
 
 public class CartController {
-	private List<CartItem> listItem= new ArrayList<CartItem>();
+	private static List<CartItem> listItem= new ArrayList<CartItem>();
+	private static int totalPrice;
 	
-	private CartItem updateCartProductQuantity(int productId, int quantity) {
+	public static List<CartItem> getListItem() {
+		return listItem;
+	}
+
+	public static void setListItem(List<CartItem> listItem) {
+		CartController.listItem = listItem;
+	}
+
+	public static int getTotalPrice() {
+		return totalPrice;
+	}
+
+	public static void setTotalPrice(int totalPrice) {
+		CartController.totalPrice = totalPrice;
+	}
+	
+	private static CartItem updateCartProductQuantity(int productId, int quantity) {
 		CartItem item = null;
 		int productQty=0;
 		for (int i = 0; i < listItem.size(); i++) {
@@ -24,21 +41,25 @@ public class CartController {
 		return item;
 	}
 	
-	public CartItem addToCart(int productId,int quantity) {
+	public static CartItem addToCart(int productId,int quantity) {
 		CartItem item = null;
 		Product product = ProductController.getProduct(productId);
 		if(product != null) {
 			item = new CartItem(product, quantity);
 			if(listItem.contains(item)) {
 				item=updateCartProductQuantity(productId, quantity);
+				
 			}else {
 				listItem.add(item);
 			}
+			calculateTotalPrice();
 		}
+		int stock=product.getProductStock()-quantity;
+		ProductController.updateProductStock(productId, stock);
+		
 		return item;
 	}
-	public int calculateTotalPrice() {
-		int totalPrice=0;
+	private static int calculateTotalPrice() {
 		for (int i = 0; i < listItem.size(); i++) {
 			totalPrice+=(listItem.get(i).getProduct().getProductPrice()*listItem.get(i).getQuantity());
 		}

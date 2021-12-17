@@ -1,41 +1,40 @@
 package Views;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JLabel;
 import java.awt.Font;
-import java.util.Collections;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
+import javax.swing.table.DefaultTableModel;
 
 import Controller.EmployeeController;
 import Controller.PositionController;
 import Model.Position;
 import Model.Employee.Employee;
+import Views.Dialogs.EmployeeDelete;
 import Views.Dialogs.EmployeeInsert;
-
-import javax.swing.JPanel;
-import javax.swing.JList;
-import javax.swing.AbstractListModel;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.border.BevelBorder;
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.text.TabExpander;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.ImageIcon;
+import Views.Dialogs.EmployeeUpdate;
 
 public class EmployeeManagementForm {
 
 	private JFrame frame;
+	private int employeeID;
 	private JTextField name;
 	private JTextField salary;
 	private JTextField username;
@@ -43,8 +42,14 @@ public class EmployeeManagementForm {
 	private JComboBox<Position> position;
 	private JTable table_1;
 	
+	private int selected_idx;//selected table index
+	private DefaultTableModel model;
 	private HashMap<Integer, String> map = new HashMap<Integer, String>();
-	private boolean insertStatus;
+	
+	public JFrame getFrame() {
+		return frame;
+	}
+	
 	/**
 	 * Launch the application.
 	 */
@@ -70,25 +75,27 @@ public class EmployeeManagementForm {
 	/*
 	 * Create table
 	 * */
-	private JTable getJTable() {
+	private JTable getTable() {
 
 	    String[] colName = {
-				"No", "Name", "Position","Salary", "Status", "Username", "Password"
+				"ID", "Name", "Position","Salary", "Status", "Username", "Password"
 			};
 	    if (table_1 == null) {
 	        table_1 = new JTable();
 	    }
-	    DefaultTableModel contactTableModel = (DefaultTableModel) table_1.getModel();
-	    contactTableModel.setColumnIdentifiers(colName);
+	    model = (DefaultTableModel) table_1.getModel();
+	    model.setColumnIdentifiers(colName);
 		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	    return table_1;
 	}
-	private void setJTable() {
+//	set table
+	private void setTable() {
+		model.getDataVector().removeAllElements();
 		List<Employee> list1 = EmployeeController.getAllEmployee();
-		DefaultTableModel model =(DefaultTableModel) table_1.getModel();
+		model =(DefaultTableModel) table_1.getModel();
 		for (int i = 0; i < list1.size(); i++) {
 			String data[]= new String[7];
-			data[0]=String.valueOf(i+1) ;
+			data[0]=String.valueOf(list1.get(i).getEmployeId()) ;
 			data[1]=list1.get(i).getName();
 			data[2]=map.get(list1.get(i).getPositionId());
 			data[3]=String.valueOf(list1.get(i).getSalary());
@@ -99,12 +106,14 @@ public class EmployeeManagementForm {
 		}
 		table_1.setModel(model);
 	}
-	private void showItem(Employee emp) {
-		name.setText(emp.getName());
-		salary.setText(Integer.toString(emp.getSalary()));
-		position.setSelectedItem(map.get(emp.getPositionId()));
-		password.setText(emp.getPassword());
-		username.setText(emp.getUsername());
+	//setting table
+	
+	private void resetFields() {
+		name.setText("");
+		password.setText("");
+		position.setSelectedItem("");
+		salary.setText("");
+		username.setText("");
 	}
 	/**
 	 * Initialize the contents of the frame.
@@ -181,10 +190,12 @@ public class EmployeeManagementForm {
 		btnNewButton.setIcon(new ImageIcon(EmployeeManagementForm.class.getResource("/org/eclipse/jface/text/source/projection/images/collapsed.png")));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				insertStatus=EmployeeController.insertEmployee(list,name, position, salary, username, password);
-				EmployeeInsert dialog = new EmployeeInsert(insertStatus);
-				if(insertStatus)
-					setJTable();
+				Employee emp=null;
+				emp=EmployeeController.insertEmployee(list,name, position, salary, username, password);
+				EmployeeInsert dialog = new EmployeeInsert(emp);
+				resetFields();
+				if(emp!=null)
+					setTable();
 				dialog.setVisible(true);
 			}
 		});
@@ -192,6 +203,17 @@ public class EmployeeManagementForm {
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Update");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Employee emp=null;
+				emp=EmployeeController.updateEmployee(employeeID,name,salary,username,password);
+				EmployeeUpdate dialog = new EmployeeUpdate(emp);
+				resetFields();
+				if(emp!=null)
+					setTable();
+				dialog.setVisible(true);
+			}
+		});
 		btnNewButton_1.setIcon(new ImageIcon(EmployeeManagementForm.class.getResource("/icons/full/message_info.png")));
 		btnNewButton_1.setBounds(329, 327, 97, 45);
 		panel.add(btnNewButton_1);
@@ -200,8 +222,19 @@ public class EmployeeManagementForm {
 		btnNewButton_2.setIcon(new ImageIcon(EmployeeManagementForm.class.getResource("/icons/full/message_warning.png")));
 		btnNewButton_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				int employeeId=0;
-				EmployeeController.deleteEmployee(employeeId);
+				int confirm = JOptionPane.showConfirmDialog (null, "Would You Like to Delete or Fire This Employee?","Warning",JOptionPane.YES_NO_OPTION);
+				resetFields();
+				if(confirm == JOptionPane.YES_OPTION){
+					boolean status=EmployeeController.deleteEmployee(employeeID);
+					EmployeeDelete dialog = new EmployeeDelete(status);
+					if(status) {
+						model.removeRow(selected_idx);
+						setTable();
+					}
+					dialog.setVisible(true);
+				}else {
+					JOptionPane.showMessageDialog(null, "No Employee Deleted or Fired!");
+				}				
 			}
 		});
 		btnNewButton_2.setBounds(504, 327, 97, 45);
@@ -218,11 +251,62 @@ public class EmployeeManagementForm {
 		panel_1.add(scrollPane);
 		
 		//get table
-		getJTable();
+		getTable();
 		//set table
-		setJTable();
+		setTable();
+		table_1.addMouseListener(new MouseListener() {
+			
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// TODO Auto-generated method stub
+				selected_idx = table_1.getSelectedRow();
+				showItem();
+			}
+			private void showItem() {
+				employeeID=Integer.parseInt((String) model.getValueAt(selected_idx, 0));
+				name.setText((String) model.getValueAt(selected_idx, 1));
+				position.setSelectedItem((String) model.getValueAt(selected_idx, 2));
+				salary.setText((String) model.getValueAt(selected_idx, 3));
+				username.setText((String) model.getValueAt(selected_idx, 5));
+				password.setText((String) model.getValueAt(selected_idx, 6));
+			}
+		});
 		
 		scrollPane.setViewportView(table_1);
+		
+		JButton btnNewButton_3 = new JButton("Back");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				EmployeeController.viewHome();
+			}
+		});
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnNewButton_3.setBounds(41, 511, 97, 56);
+		frame.getContentPane().add(btnNewButton_3);
 		
 		frame.setVisible(true);
 	}

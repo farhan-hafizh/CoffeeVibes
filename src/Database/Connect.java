@@ -15,12 +15,14 @@ public class Connect {
 	private final String DRIVER ="com.mysql.jdbc.Driver"; 
 	
 	private Statement st;
-	private static Connect connection;
+	private PreparedStatement ps;
+	private Connection con;
+	private static Connect connection=null;
 	
 	private Connect(){
 		try {
 			Class.forName(DRIVER);
-			Connection con = (Connection) DriverManager.getConnection("jdbc:mysql://"+HOST+"/"+DBNAME,USERNAME,PASSWORD);
+			con = (Connection) DriverManager.getConnection("jdbc:mysql://"+HOST+"/"+DBNAME,USERNAME,PASSWORD);
 			
 			st=(Statement)con.createStatement();
 		} catch (Exception e) {
@@ -56,15 +58,21 @@ public class Connect {
 //			st.close();
 		} catch (SQLException ex) {
 			// TODO Auto-generated catch block
-			 System.out.println("SQLException: " + ex.getMessage());
-			    System.out.println("SQLState: " + ex.getSQLState());
-			    System.out.println("VendorError: " + ex.getErrorCode());
+			ex.printStackTrace();
+//			 System.out.println("SQLException: " + ex.getMessage());
+//			    System.out.println("SQLState: " + ex.getSQLState());
+//			    System.out.println("VendorError: " + ex.getErrorCode());
 		}
 		return status;
 	}
-	public PreparedStatement prepareStatement() {
-		// TODO Auto-generated method stub
-		return null;
+	public PreparedStatement preparedStatement(String query) {
+		ps = null;
+		try {
+			ps = con.prepareStatement(query);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ps;
 	}
 	
 }

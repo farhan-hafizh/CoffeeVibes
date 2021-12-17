@@ -75,7 +75,7 @@ public class LoginPage {
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setBounds(78, 66, 73, 16);
+		lblUsername.setBounds(48, 66, 103, 16);
 		frame.getContentPane().add(lblUsername);
 		
 		username = new JTextField();
@@ -84,7 +84,7 @@ public class LoginPage {
 		username.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Password");
-		lblNewLabel.setBounds(81, 111, 56, 16);
+		lblNewLabel.setBounds(48, 111, 89, 16);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JButton btnLogin = new JButton("Login");
