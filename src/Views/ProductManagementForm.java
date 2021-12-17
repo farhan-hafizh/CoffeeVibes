@@ -173,7 +173,7 @@ public class ProductManagementForm {
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
-		if(LoginSession.getEmployee() instanceof ProductAdmin) {
+		if(LoginSession.getSession() instanceof ProductAdmin) {
 			GridBagLayout gbl_panel_2 = new GridBagLayout();
 			gbl_panel_2.columnWidths = new int[]{40, 97, 89, 97, 84, 97, 0};
 			gbl_panel_2.rowHeights = new int[]{31, 53, 0};

@@ -83,13 +83,13 @@ public class Home {
 		panel_2.setBounds(99, 75, 629, 44);
 		frame.getContentPane().add(panel_2);
 		
-		JLabel lblNewLabel_1 = new JLabel(LoginSession.getEmployee().getName());
+		JLabel lblNewLabel_1 = new JLabel(LoginSession.getSession().getName());
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		panel_2.add(lblNewLabel_1);
 		//set y on grid
 		int y=0;
 		
-		if(LoginSession.getEmployee() instanceof ProductAdmin || LoginSession.getEmployee() instanceof Barista) {
+		if(LoginSession.getSession() instanceof ProductAdmin || LoginSession.getSession() instanceof Barista) {
 			y++;
 			JButton btnNewButton = new JButton("View Products");
 			btnNewButton.addActionListener(new ActionListener() {
@@ -104,7 +104,7 @@ public class Home {
 			gbc_btnNewButton.gridy = y;
 			panel_1.add(btnNewButton, gbc_btnNewButton);
 		}
-		if(LoginSession.getEmployee() instanceof ProductAdmin) {
+		if(LoginSession.getSession() instanceof ProductAdmin) {
 			y++;
 			JButton btnNewButton_1 = new JButton("View Voucher");
 			btnNewButton_1.addActionListener(new ActionListener() {
@@ -118,7 +118,7 @@ public class Home {
 			gbc_btnNewButton_1.gridy = y;
 			panel_1.add(btnNewButton_1, gbc_btnNewButton_1);
 		}
-		if(LoginSession.getEmployee() instanceof Barista) {
+		if(LoginSession.getSession() instanceof Barista) {
 			y++;
 			JButton btnNewButton_2 = new JButton("View Cart");
 			btnNewButton_2.addActionListener(new ActionListener() {
@@ -132,7 +132,7 @@ public class Home {
 			gbc_btnNewButton_2.gridy = y;
 			panel_1.add(btnNewButton_2, gbc_btnNewButton_2);
 		}
-		if(LoginSession.getEmployee() instanceof HRD || LoginSession.getEmployee() instanceof Manager) {
+		if(LoginSession.getSession() instanceof HRD || LoginSession.getSession() instanceof Manager) {
 			y++;
 			JButton btnNewButton_3 = new JButton("View Employees");
 			btnNewButton_3.addActionListener(new ActionListener() {

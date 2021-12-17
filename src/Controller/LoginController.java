@@ -30,8 +30,8 @@ public class LoginController {
 		if(loginPage!=null) 
 			emp = Employee.getEmployee(loginPage.getUsername().getText(), loginPage.getPassword().getText());
 		if(emp != null) {
-			new LoginSession(emp);
-			loginPage.getFrame().dispose();
+			LoginSession.setSession(emp);
+			LoginPage.getFrame().dispose();
 			HomeController.viewHomePage();;
 		}else {
 			LoginFailed dialog = new LoginFailed();

@@ -3,17 +3,20 @@ package Session;
 import Model.Employee.Employee;
 
 public class LoginSession {
-	private static Employee employee;
+	private static Employee employee=null;
 	
-	public LoginSession(Employee emp) {
+	private LoginSession(Employee emp) {
 		employee=emp;
 	}
 
-	public static void setEmployee(Employee employee) {
-		LoginSession.employee = employee;
+	public static void setSession(Employee emp) {
+		if(employee==null) {
+			employee = emp;
+		}
 	}
 
-	public static Employee getEmployee() {
+	public static Employee getSession() {
+		
 		return employee;
 	}
 	
