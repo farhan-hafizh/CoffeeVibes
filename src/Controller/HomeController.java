@@ -16,13 +16,17 @@ public class HomeController {
 		homePage.getFrame().dispose();
 		ProductController.viewProductManagementForm();;
 	}
-//	public static void viewCartManagementForm() {
-//		homePage.getFrame().dispose();
-//		EmployeeController.viewEmployeeManagementForm();
-//	}
-//	public static void viewVoucherManagementForm() {
-//		homePage.getFrame().dispose();
-//		EmployeeController.viewEmployeeManagementForm();
-//	}
+	public static void viewCartManagementForm() {
+		homePage.getFrame().dispose();
+		CartController.viewCartMangament();
+	}
+	public static void viewVoucherManagementForm() {
+		homePage.getFrame().dispose();
+		VoucherController.viewVoucherManagementForm();
+	}
+	public static void viewAllTransactionForm() {
+		homePage.getFrame().dispose();
+		TransactionController.viewTransactionManagementForm();
+	}
 
 }

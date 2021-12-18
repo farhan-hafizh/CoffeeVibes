@@ -11,7 +11,7 @@ import Views.EmployeeManagementForm;
 
 public class EmployeeController {
 	
-	private static EmployeeManagementForm view=null;
+	private static EmployeeManagementForm view;
 	
 	public EmployeeController() {
 		

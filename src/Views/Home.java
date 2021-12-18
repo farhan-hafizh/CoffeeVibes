@@ -123,6 +123,7 @@ public class Home {
 			JButton btnNewButton_2 = new JButton("View Cart");
 			btnNewButton_2.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					HomeController.viewCartManagementForm();
 				}
 			});
 			GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
@@ -142,9 +143,24 @@ public class Home {
 			});
 			GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
 			gbc_btnNewButton_3.fill = GridBagConstraints.BOTH;
+			gbc_btnNewButton_3.insets= new Insets(0, 0, 5, 0);
 			gbc_btnNewButton_3.gridx = 1;
 			gbc_btnNewButton_3.gridy = y;
 			panel_1.add(btnNewButton_3, gbc_btnNewButton_3);
+		}
+		if(LoginSession.getSession() instanceof Manager) {
+			y++;
+			JButton btnNewButton_4 = new JButton("View All Transaction");
+			btnNewButton_4.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					HomeController.viewAllTransactionForm();
+				}
+			});
+			GridBagConstraints gbc_btnNewButton_4 = new GridBagConstraints();
+			gbc_btnNewButton_4.fill = GridBagConstraints.BOTH;
+			gbc_btnNewButton_4.gridx = 1;
+			gbc_btnNewButton_4.gridy = y;
+			panel_1.add(btnNewButton_4, gbc_btnNewButton_4);
 		}
 		frame.setVisible(true);
 	}

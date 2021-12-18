@@ -116,7 +116,7 @@ public class Employee {
 			prep.setString(3, status);
 			prep.setInt(4, salary);
 			prep.setString(5, username);
-			prep.setString(5, password);
+			prep.setString(6, password);
 			
 			insertStatus=prep.executeUpdate();
 		} catch (SQLException e) {
@@ -189,7 +189,7 @@ public class Employee {
 			prep.setString(4, password);
 			prep.setInt(5, employeeId);
 			
-			updateStatus=prep.executeUpdate(query);
+			updateStatus=prep.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

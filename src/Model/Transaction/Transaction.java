@@ -3,15 +3,19 @@ package Model.Transaction;
 import java.util.Date;
 
 public class Transaction {
-	private int transactionId,voucherId,employeeId,totalPrice;
+	private int transactionId,voucherId,employeeId,totalPrice;	
 	private Date purchaseDate;
+	private TransactionItem listTransactionItem;
 	
-	public Transaction(int transactionId, int voucherId, int employeeId, int totalPrice, Date purchaseDate) {
+	public Transaction(int transactionId, int voucherId, int employeeId, int totalPrice, Date purchaseDate,
+			TransactionItem listTransactionItem) {
+		super();
 		this.transactionId = transactionId;
 		this.voucherId = voucherId;
 		this.employeeId = employeeId;
 		this.totalPrice = totalPrice;
 		this.purchaseDate = purchaseDate;
+		this.listTransactionItem = listTransactionItem;
 	}
 	
 	public int getTransactionId() {
@@ -44,6 +48,11 @@ public class Transaction {
 	public void setPurchaseDate(Date purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
+	public TransactionItem getListTransactionItem() {
+		return listTransactionItem;
+	}
 	
-	
+	public void setListTransactionItem(TransactionItem listTransactionItem) {
+		this.listTransactionItem = listTransactionItem;
+	}
 }

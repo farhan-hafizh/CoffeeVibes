@@ -1,16 +1,7 @@
 package Controller;
 
-
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
-
-import Model.Employee.Barista;
 import Model.Employee.Employee;
-import Model.Employee.HRD;
-import Model.Employee.Manager;
 import Session.LoginSession;
-import Views.EmployeeManagementForm;
-import Views.Home;
 import Views.LoginPage;
 import Views.Dialogs.LoginFailed;
 

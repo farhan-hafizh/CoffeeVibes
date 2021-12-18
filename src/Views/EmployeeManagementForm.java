@@ -75,7 +75,7 @@ public class EmployeeManagementForm {
 	/*
 	 * Create table
 	 * */
-	private JTable getTable() {
+	private void getTable() {
 
 	    String[] colName = {
 				"ID", "Name", "Position","Salary", "Status", "Username", "Password"
@@ -86,7 +86,6 @@ public class EmployeeManagementForm {
 	    model = (DefaultTableModel) table_1.getModel();
 	    model.setColumnIdentifiers(colName);
 		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-	    return table_1;
 	}
 //	set table
 	private void setTable() {

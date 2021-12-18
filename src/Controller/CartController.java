@@ -5,10 +5,16 @@ import java.util.List;
 
 import Model.CartItem;
 import Model.Product;
+import Views.CartManagementForm;
 
 public class CartController {
 	private static List<CartItem> listItem= new ArrayList<CartItem>();
 	private static int totalPrice;
+	private static CartManagementForm view;
+	
+	public static void viewCartMangament() {
+		view=new CartManagementForm();
+	}
 	
 	public static List<CartItem> getListItem() {
 		return listItem;
