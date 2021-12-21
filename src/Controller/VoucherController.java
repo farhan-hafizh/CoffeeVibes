@@ -2,6 +2,8 @@ package Controller;
 
 import java.util.List;
 
+import javax.swing.JTextField;
+
 import Model.Voucher;
 import Views.VoucherManagementForm;
 
@@ -18,5 +20,21 @@ public class VoucherController {
 		List<Voucher> list = Voucher.getAllVoucher();
 		return list;
 	}
+	public static Voucher generateVoucher(JTextField voucherID, JTextField discount) {
+		Voucher voucher = Voucher.generateVoucher(voucherID.getText(),Integer.valueOf(discount.getText()));
+		return voucher;
+	}
+	public static void backHome() {
+		view.getFrame().dispose();
+		HomeController.viewHomePage();
+	}
 
+	public static boolean deleteVoucher(JTextField voucherID) {
+		// TODO Auto-generated method stub
+		int status=0;
+		status=Voucher.deleteVoucher(voucherID.getText());
+		if(status!=0)
+			return true;
+		else return false;
+	}
 }

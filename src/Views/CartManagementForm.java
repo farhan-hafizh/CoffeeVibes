@@ -18,6 +18,7 @@ import java.awt.Font;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 
@@ -28,6 +29,7 @@ public class CartManagementForm {
 	
 	private DefaultTableModel model;
 	private HashMap<Integer, String> map;
+	private JComboBox voucherId;
 	/*
 	 * Create table
 	 * */
@@ -123,16 +125,20 @@ public class CartManagementForm {
 		frame.getContentPane().add(btnNewButton);
 		
 		List<Voucher> list = VoucherController.getAllVoucher();
-		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setBounds(141, 456, 132, 22);
-		frame.getContentPane().add(comboBox);
+		String[] vouchers= new String[list.size()];
+		for (int i = 0; i < list.size(); i++) {
+			vouchers[i]=list.get(i).getVoucherId();
+		}
+		voucherId = new JComboBox();
+		voucherId.setModel(new DefaultComboBoxModel(vouchers));
+		voucherId.setBounds(205, 113, 423, 22);
+		panel.add(voucherId);
 		
 		JLabel lblVoucher = new JLabel("Voucher    : ");
 		lblVoucher.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblVoucher.setBounds(21, 453, 114, 25);
 		frame.getContentPane().add(lblVoucher);
-		
+		System.out.println("sadasd");
 		frame.setVisible(true);
 	}
 }
