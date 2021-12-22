@@ -42,9 +42,11 @@ public class ProductController {
 		Product prod = Product.updateProduct(productId,name.getText(),description.getText(),Integer.parseInt(price.getText()),Integer.parseInt(stock.getText()));
 		return prod;
 	}
-	public static void updateProductStock(int productId, int stock) {
+	public static boolean updateProductStock(int productId, int stock) {
 		Product product = Product.getProduct(productId);
 		Product.updateProduct(productId, product.getProductName(), product.getProductDescription(), product.getProductPrice(), stock);
+		if(product!=null) return true;
+		else return false;
 	}
 	public static void viewHome() {
 		// TODO Auto-generated method stub

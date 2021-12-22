@@ -109,6 +109,7 @@ public class Home {
 			JButton btnNewButton_1 = new JButton("View Voucher");
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+				HomeController.viewVoucherManagementForm();
 				}
 			});
 			GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();

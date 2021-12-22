@@ -210,6 +210,7 @@ public class VoucherManagementForm {
 				Voucher data = VoucherController.generateVoucher(voucherID,discount);
 				if(data!=null) {
 					JOptionPane.showMessageDialog(null, "Voucher generated!");
+					resetField();
 					setTable();
 				}
 			}
@@ -242,5 +243,6 @@ public class VoucherManagementForm {
 		});
 		btnNewButton.setBounds(61, 443, 87, 61);
 		frame.getContentPane().add(btnNewButton);
+		frame.setVisible(true);
 	}
 }

@@ -3,6 +3,8 @@ package Controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import Model.CartItem;
 import Model.Product;
 import Views.CartManagementForm;
@@ -48,17 +50,19 @@ public class CartController {
 	}
 	
 	public static CartItem addToCart(int productId,int quantity) {
-		CartItem item = null;
+		int flag=0;
 		Product product = ProductController.getProduct(productId);
+		CartItem item = new CartItem(product, quantity);
 		if(product != null) {
-			item = new CartItem(product, quantity);
-			if(listItem.contains(item)) {
-				item=updateCartProductQuantity(productId, quantity);
-				
-			}else {
-				listItem.add(item);
+			for (int i = 0; i < listItem.size(); i++) {
+				if(listItem.get(i).getProduct().getProductId()==productId) {
+					flag++;
+				}				
 			}
-			calculateTotalPrice();
+			if(flag!=0)
+				item=updateCartProductQuantity(productId, quantity);
+			else listItem.add(item);
+			totalPrice=calculateTotalPrice();
 		}
 		int stock=product.getProductStock()-quantity;
 		ProductController.updateProductStock(productId, stock);
@@ -66,9 +70,41 @@ public class CartController {
 		return item;
 	}
 	private static int calculateTotalPrice() {
+		int totalPrice=0;
 		for (int i = 0; i < listItem.size(); i++) {
 			totalPrice+=(listItem.get(i).getProduct().getProductPrice()*listItem.get(i).getQuantity());
 		}
 		return totalPrice;
+	}
+
+	public static void viewHome() {
+		// TODO Auto-generated method stub
+		view.getFrame().dispose();
+		HomeController.viewHomePage();
+	}
+
+	public static void viewTransactionManagementForm() {
+		// TODO Auto-generated method stub
+		view.getFrame().dispose();
+		if(listItem.size()>0)
+			TransactionController.viewTransactionManagementForm();
+		else JOptionPane.showMessageDialog(null, "No item found in Cart!");
+	}
+
+	public static boolean deleteItem(int productId) {
+		// TODO Auto-generated method stub
+		int qty,stock;
+		boolean status=false;
+		Product product=ProductController.getProduct(productId);
+		for (int i = 0; i < listItem.size(); i++) {
+			if(listItem.get(i).getProduct().getProductId()==productId) {
+				qty=listItem.get(i).getQuantity();
+				stock=product.getProductStock()+qty;
+				totalPrice=0;
+				listItem.remove(i);
+				status=ProductController.updateProductStock(productId, stock);
+			}
+		}
+		return status;
 	}
 }

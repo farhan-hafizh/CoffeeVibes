@@ -125,53 +125,53 @@ public class EmployeeManagementForm {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
-		panel.setBounds(12, 13, 729, 385);
+		panel.setBounds(12, 13, 729, 443);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Name");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		lblNewLabel.setBounds(47, 61, 62, 23);
+		lblNewLabel.setBounds(49, 119, 62, 23);
 		panel.add(lblNewLabel);
 		
 		JLabel lblPosition = new JLabel("Position");
 		lblPosition.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		lblPosition.setBounds(47, 110, 91, 23);
+		lblPosition.setBounds(49, 168, 91, 23);
 		panel.add(lblPosition);
 		
 		JLabel lblSalary = new JLabel("Salary");
 		lblSalary.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		lblSalary.setBounds(47, 159, 62, 23);
+		lblSalary.setBounds(49, 217, 62, 23);
 		panel.add(lblSalary);
 		
 		JLabel lblUsername = new JLabel("Username");
 		lblUsername.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		lblUsername.setBounds(47, 209, 109, 25);
+		lblUsername.setBounds(49, 267, 109, 25);
 		panel.add(lblUsername);
 		
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 21));
-		lblPassword.setBounds(47, 269, 91, 23);
+		lblPassword.setBounds(49, 327, 91, 23);
 		panel.add(lblPassword);
 		
 		name = new JTextField();
 		name.setColumns(10);
-		name.setBounds(205, 64, 423, 22);
+		name.setBounds(207, 122, 423, 22);
 		panel.add(name);
 		
 		salary = new JTextField();
 		salary.setColumns(10);
-		salary.setBounds(205, 162, 423, 22);
+		salary.setBounds(207, 220, 423, 22);
 		panel.add(salary);
 		
 		username = new JTextField();
 		username.setColumns(10);
-		username.setBounds(205, 213, 423, 22);
+		username.setBounds(207, 271, 423, 22);
 		panel.add(username);
 		
 		password = new JTextField();
 		password.setColumns(10);
-		password.setBounds(205, 272, 423, 22);
+		password.setBounds(207, 330, 423, 22);
 		panel.add(password);
 		
 	    List<Position> list = PositionController.getAllPosition();
@@ -182,7 +182,7 @@ public class EmployeeManagementForm {
 		}
 		position = new JComboBox();
 		position.setModel(new DefaultComboBoxModel(array));
-		position.setBounds(205, 113, 423, 22);
+		position.setBounds(207, 171, 423, 22);
 		panel.add(position);
 		
 		JButton btnNewButton = new JButton("Insert");
@@ -198,7 +198,7 @@ public class EmployeeManagementForm {
 				dialog.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(150, 327, 97, 45);
+		btnNewButton.setBounds(152, 385, 97, 45);
 		panel.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Update");
@@ -214,7 +214,7 @@ public class EmployeeManagementForm {
 			}
 		});
 		btnNewButton_1.setIcon(new ImageIcon(EmployeeManagementForm.class.getResource("/icons/full/message_info.png")));
-		btnNewButton_1.setBounds(329, 327, 97, 45);
+		btnNewButton_1.setBounds(331, 385, 97, 45);
 		panel.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Delete");
@@ -236,8 +236,13 @@ public class EmployeeManagementForm {
 				}				
 			}
 		});
-		btnNewButton_2.setBounds(504, 327, 97, 45);
+		btnNewButton_2.setBounds(506, 385, 97, 45);
 		panel.add(btnNewButton_2);
+		
+		JLabel lblNewLabel_1 = new JLabel("Employee Management Form");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.BOLD, 23));
+		lblNewLabel_1.setBounds(188, 39, 338, 70);
+		panel.add(lblNewLabel_1);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));

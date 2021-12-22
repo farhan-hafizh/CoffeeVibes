@@ -130,48 +130,53 @@ public class ProductManagementForm {
 		
 		JLabel lblNewLabel = new JLabel("Name");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel.setBounds(37, 35, 93, 31);
+		lblNewLabel.setBounds(40, 66, 93, 31);
 		panel.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("Description");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel_1.setBounds(37, 79, 124, 31);
+		lblNewLabel_1.setBounds(40, 110, 124, 31);
 		panel.add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Price");
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel_1_1.setBounds(37, 123, 93, 31);
+		lblNewLabel_1_1.setBounds(40, 154, 93, 31);
 		panel.add(lblNewLabel_1_1);
 		
 		JLabel lblNewLabel_1_1_1 = new JLabel("Stock");
 		lblNewLabel_1_1_1.setFont(new Font("Tahoma", Font.PLAIN, 25));
-		lblNewLabel_1_1_1.setBounds(37, 167, 93, 31);
+		lblNewLabel_1_1_1.setBounds(40, 198, 93, 31);
 		panel.add(lblNewLabel_1_1_1);
 		
 		name = new JTextField();
-		name.setBounds(181, 31, 385, 31);
+		name.setBounds(184, 62, 385, 31);
 		panel.add(name);
 		name.setColumns(10);
 		
 		description = new JTextField();
 		description.setColumns(10);
-		description.setBounds(181, 79, 385, 31);
+		description.setBounds(184, 110, 385, 31);
 		panel.add(description);
 		
 		price = new JTextField();
 		price.setColumns(10);
-		price.setBounds(181, 123, 385, 31);
+		price.setBounds(184, 154, 385, 31);
 		panel.add(price);
 		
 		stock = new JTextField();
 		stock.setColumns(10);
-		stock.setBounds(181, 167, 385, 31);
+		stock.setBounds(184, 198, 385, 31);
 		panel.add(stock);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(62, 242, 545, 115);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
+		
+		JLabel lblNewLabel_2 = new JLabel("Product Detail");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.BOLD, 20));
+		lblNewLabel_2.setBounds(258, 3, 196, 46);
+		panel.add(lblNewLabel_2);
 		
 		if(LoginSession.getSession() instanceof ProductAdmin) {
 			GridBagLayout gbl_panel_2 = new GridBagLayout();
