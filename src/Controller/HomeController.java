@@ -26,7 +26,7 @@ public class HomeController {
 	}
 	public static void viewAllTransactionForm() {
 		homePage.getFrame().dispose();
-		TransactionController.viewTransactionManagementForm();
+		TransactionController.viewAllTransactionManagementForm();
 	}
 
 }
