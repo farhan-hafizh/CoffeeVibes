@@ -72,7 +72,6 @@ public class Transaction {
 			voucher=rs.getString("voucher");
 			transactionId=rs.getInt("transactionID");
 			totalPrice=rs.getInt("transactionTotalPrice");
-			items=TransactionItem.getTransItem(transactionId);
 			purchaseDate=rs.getDate("transactionDate");
 			trans=new Transaction(transactionId, totalPrice, employeeName, voucher, purchaseDate, items);
 		} catch (SQLException e) {
@@ -119,5 +118,29 @@ public class Transaction {
 			e.printStackTrace();
 		}
 		return trans;
+	}
+	public static List<Transaction> getAllTransaction() {
+		// TODO Auto-generated method stub
+		List<Transaction> list = new ArrayList<Transaction>();
+		Transaction trans;
+		List<TransactionItem> items = new ArrayList<TransactionItem>();
+		String query ="SELECT * FROM transactions";
+		ResultSet rs = Connect.getConnection().execute(query);
+		try {
+			while(rs.next()) {
+				trans=setTransaction(rs);
+				list.add(trans);
+			}
+			int id;
+			for (int i = 0; i < list.size(); i++) {
+				id=list.get(i).getTransactionId();
+				items=TransactionItem.getTransItem(id);
+				list.get(i).setListTransactionItem(items);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

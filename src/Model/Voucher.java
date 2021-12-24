@@ -115,4 +115,39 @@ public class Voucher {
 	
 		return status;
 	}
+	
+	public static boolean updateStatus(String voucherId) {
+		// TODO Auto-generated method stub
+		int returns=0;
+		String query="UPDATE vouchers SET status = 'Inactive' WHERE voucherID = ?";
+		PreparedStatement prep = Connect.getConnection().preparedStatement(query);
+		try {
+			prep.setString(1, voucherId);
+			returns=prep.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(returns!=0)
+			return true;
+		else return false;
+	}
+
+	public static Voucher getVoucher(String voucherID) {
+		// TODO Auto-generated method stub
+		Voucher voucher = null;
+		String query="SELECT * FROM vouchers WHERE voucherID= ?";
+		PreparedStatement prep = Connect.getConnection().preparedStatement(query);
+		try {
+			prep.setString(1, voucherID);
+			ResultSet rs = prep.executeQuery();
+			while(rs.next()) {
+				voucher=setVoucher(rs);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return voucher;
+	}
 }

@@ -37,4 +37,16 @@ public class VoucherController {
 			return true;
 		else return false;
 	}
+
+	public static boolean updateStatus(String voucher) {
+		// TODO Auto-generated method stub
+		boolean status=Voucher.updateStatus(voucher);
+		return status;
+	}
+
+	public static Voucher getVoucher(String voucherID) {
+		// TODO Auto-generated method stub
+		Voucher voucher = Voucher.getVoucher(voucherID);
+		return voucher;
+	}
 }

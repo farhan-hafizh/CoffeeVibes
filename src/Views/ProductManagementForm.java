@@ -94,7 +94,7 @@ public class ProductManagementForm {
 	    model = (DefaultTableModel) table.getModel();
 	    model.setColumnIdentifiers(colName);
 	    table.setBounds(12, 13, 420, 701);
-//		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 	    
 	}
 	private void setTable() {

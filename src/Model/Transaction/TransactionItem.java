@@ -59,13 +59,12 @@ public class TransactionItem {
 		String productName;
 		
 		try {
-			while(rs.next()) {
 				transactionId=rs.getInt("transactionID");
 				quantity=rs.getInt("quantity");
 				totalPrice=rs.getInt("totalPrice");
 				productName=rs.getString("productName");
 				items = new TransactionItem(transactionId, quantity, totalPrice, productName);
-			}
+			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,15 +74,13 @@ public class TransactionItem {
 	public static List<TransactionItem> getTransItem(int transactionId) {
 		// TODO Auto-generated method stub
 		List<TransactionItem> trans = new ArrayList<TransactionItem>();
-		TransactionItem trans1;
-		String query="SELECT * FROM transactionItem WHERE transactionID= ?";
-		PreparedStatement prep = Connect.getConnection().preparedStatement(query);
+		TransactionItem trans1=null;
+		String query=String.format("SELECT * FROM transactionitem trans WHERE trans.transactionID= %d", transactionId);
 		
+		ResultSet rs1=Connect.getConnection().execute(query);
 		try {
-			prep.setInt(1, transactionId);
-			ResultSet rs=prep.executeQuery();
-			while(rs.next()) {
-				trans1=setTransactionItem(rs);
+			while(rs1.next()) {
+				trans1=setTransactionItem(rs1);
 				trans.add(trans1);
 			}
 		} catch (SQLException e) {

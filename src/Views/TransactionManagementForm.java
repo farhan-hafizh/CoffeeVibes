@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Controller.CartController;
@@ -33,8 +34,7 @@ public class TransactionManagementForm {
 	private JLabel afterDiscount;
 	
 	private DefaultTableModel model;
-	private HashMap<String, Integer> map = new HashMap<String, Integer>();
-	private JComboBox voucherId;
+	private JTextField voucherId;
 	
 	private int discounts=0;
 	private int priceAfterDiscount;
@@ -136,7 +136,7 @@ public class TransactionManagementForm {
 		JButton btnNewButton = new JButton("Pay");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Transaction trans=TransactionController.insertTransaction(CartController.getListItem(),voucherId.getSelectedItem(),priceAfterDiscount);
+				Transaction trans=TransactionController.insertTransaction(CartController.getListItem(),voucherId.getText(),priceAfterDiscount);
 				if(trans!=null) {
 					JOptionPane.showMessageDialog(null, "Transaction Added!");
 					TransactionController.viewHome();
@@ -146,31 +146,32 @@ public class TransactionManagementForm {
 		btnNewButton.setBounds(356, 669, 97, 45);
 		frame.getContentPane().add(btnNewButton);
 		
-		List<Voucher> list = VoucherController.getAllVoucher();
-		String[] vouchers= new String[list.size()];
-		for (int i = 0; i < list.size(); i++) {
-			vouchers[i]=list.get(i).getVoucherId();
-			map.put(vouchers[i], list.get(i).getDiscount());
-		}
-		
+//		List<Voucher> list = VoucherController.getAllVoucher();
+//		String[] vouchers= new String[list.size()];
+//		for (int i = 0; i < list.size(); i++) {
+//			vouchers[i]=list.get(i).getVoucherId();
+//			map.put(vouchers[i], list.get(i).getDiscount());
+//		}
+//		
 		JLabel lblVoucher = new JLabel("Voucher    : ");
 		lblVoucher.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblVoucher.setBounds(22, 500, 114, 25);
 		frame.getContentPane().add(lblVoucher);
-		voucherId = new JComboBox();
-		voucherId.setBounds(136, 503, 255, 22);
+		voucherId=new JTextField();
+		voucherId.setBounds(132, 503, 116, 22);
 		frame.getContentPane().add(voucherId);
-		voucherId.setModel(new DefaultComboBoxModel(vouchers));
-		voucherId.addActionListener(new ActionListener() {
-
-			@Override
+		voucherId.setColumns(10);
+		
+		JButton btnNewButton_1 = new JButton("Validate Voucher\r\n");
+		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				int voucherDiscount=map.get(voucherId.getSelectedItem());
-				discounts=TransactionController.calculateDiscount(voucherDiscount,CartController.getTotalPrice());
-				discount.setText(String.valueOf(discounts));
-				priceAfterDiscount=CartController.getTotalPrice()-discounts;
-				afterDiscount.setText(String.valueOf(priceAfterDiscount));
+				discounts=TransactionController.getVoucher(voucherId.getText(),Integer.parseInt(totalPrice.getText()));
+				if(discounts>0) {
+					discount.setText(String.valueOf(discounts));
+					priceAfterDiscount=CartController.getTotalPrice()-discounts;
+					afterDiscount.setText(String.valueOf(priceAfterDiscount));
+					JOptionPane.showMessageDialog(null, "Voucher is valid! Discount Applied!");
+				}else JOptionPane.showMessageDialog(null, "Voucher is invalid! Or used!");
 			}
 		});
 		
@@ -208,7 +209,9 @@ public class TransactionManagementForm {
 		afterDiscount.setBounds(197, 615, 114, 25);
 		frame.getContentPane().add(afterDiscount);
 		
+		btnNewButton_1.setBounds(260, 503, 139, 25);
+		frame.getContentPane().add(btnNewButton_1);
+		
 		frame.setVisible(true);
 	}
-
 }
