@@ -44,12 +44,19 @@ public class AllTransactionManagementForm {
 					"Transaction ID", "Transaction Date", "Voucher", "Employee Name", "Total Price"
 				};
 		    if (table == null) {
-		        table = new JTable();
+		        table = new JTable() 
+		        {
+
+					public boolean getScrollableTracksViewportWidth()
+		            {
+		                return getPreferredSize().width < getParent().getWidth();
+		            }
+		        };
 		    }
 		    model = (DefaultTableModel) table.getModel();
 		    model.setColumnIdentifiers(colName);
-		    table.setBounds(12, 13, 420, 701);
-		    table.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+//		    table.setBounds(12, 13, 420, 701);
+		    table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 	}
 	private void setTable() {
 		model.getDataVector().removeAllElements();
@@ -107,6 +114,7 @@ public class AllTransactionManagementForm {
 		JScrollPane scrollPane_1 = new JScrollPane();
 		scrollPane_1.setBounds(12, 13, 385, 500);
 		panel_1.add(scrollPane_1);
+		scrollPane_1.setViewportView(table_1);
 		
 		JPanel panel_1_1 = new JPanel();
 		panel_1_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -168,12 +176,18 @@ public class AllTransactionManagementForm {
 							"Product Name", "Quantity", "Total Price"
 					};
 				    if (table_1 == null) {
-				        table_1 = new JTable();
+				        table_1 = new JTable(){
+
+							public boolean getScrollableTracksViewportWidth()
+				            {
+				                return getPreferredSize().width < getParent().getWidth();
+				            }
+				        };
 				    }
 				    model_1 = (DefaultTableModel) table_1.getModel();
 				    model_1.setColumnIdentifiers(colName);
 				    table_1.setBounds(12, 13, 420, 701);
-				    table_1.setAutoResizeMode(JTable.AUTO_RESIZE_SUBSEQUENT_COLUMNS);
+				    table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 			}
 			private void setTable(Transaction tr) {
 				model_1.getDataVector().removeAllElements();

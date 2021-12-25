@@ -2,6 +2,8 @@ package Controller;
 
 import java.util.List;
 
+import javax.swing.JLabel;
+
 import Model.CartItem;
 import Model.Voucher;
 import Model.Transaction.Transaction;
@@ -35,9 +37,9 @@ public class TransactionController {
 		return discount;
 	}
 
-	public static Transaction insertTransaction(List<CartItem> listItem, Object voucher, int price) {
+	public static Transaction insertTransaction(List<CartItem> listItem, Object voucher, JLabel afterDiscount) {
 		// TODO Auto-generated method stub
-		Transaction trans=Transaction.insertTransaction(LoginSession.getSession().getName(),(String) voucher,price);
+		Transaction trans=Transaction.insertTransaction(LoginSession.getSession().getName(),(String) voucher,Integer.parseInt(afterDiscount.getText()));
 		if(trans!=null) {
 			boolean status=VoucherController.updateStatus((String) voucher);
 		}
@@ -46,7 +48,7 @@ public class TransactionController {
 
 	public static void viewHome() {
 		// TODO Auto-generated method stub
-		view.getFrame().dispose();
+		allView.getFrame().dispose();
 		HomeController.viewHomePage();
 	}
 
@@ -63,7 +65,6 @@ public class TransactionController {
 		if(voucher== null)
 			return 0;
 		else {
-			System.out.println(voucher.getStatus());
 			if(voucher.getStatus().equals("Inactive"))
 				return 0;
 			else {

@@ -118,7 +118,6 @@ public class VoucherManagementForm {
 		
 		getTable();
 		setTable();
-		scrollPane.setViewportView(table);
 		
 		table.addMouseListener(new MouseListener() {
 			
@@ -162,6 +161,7 @@ public class VoucherManagementForm {
 			}
 			
 		});
+		scrollPane.setViewportView(table);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));

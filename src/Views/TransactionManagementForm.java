@@ -136,7 +136,7 @@ public class TransactionManagementForm {
 		JButton btnNewButton = new JButton("Pay");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Transaction trans=TransactionController.insertTransaction(CartController.getListItem(),voucherId.getText(),priceAfterDiscount);
+				Transaction trans=TransactionController.insertTransaction(CartController.getListItem(),voucherId.getText(),afterDiscount);
 				if(trans!=null) {
 					JOptionPane.showMessageDialog(null, "Transaction Added!");
 					TransactionController.viewHome();
@@ -146,13 +146,6 @@ public class TransactionManagementForm {
 		btnNewButton.setBounds(356, 669, 97, 45);
 		frame.getContentPane().add(btnNewButton);
 		
-//		List<Voucher> list = VoucherController.getAllVoucher();
-//		String[] vouchers= new String[list.size()];
-//		for (int i = 0; i < list.size(); i++) {
-//			vouchers[i]=list.get(i).getVoucherId();
-//			map.put(vouchers[i], list.get(i).getDiscount());
-//		}
-//		
 		JLabel lblVoucher = new JLabel("Voucher    : ");
 		lblVoucher.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		lblVoucher.setBounds(22, 500, 114, 25);
@@ -204,7 +197,7 @@ public class TransactionManagementForm {
 		lblNewLabel_2_1.setBounds(22, 615, 182, 25);
 		frame.getContentPane().add(lblNewLabel_2_1);
 		
-		afterDiscount = new JLabel("0");
+		afterDiscount = new JLabel(totalPrice.getText());
 		afterDiscount.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		afterDiscount.setBounds(197, 615, 114, 25);
 		frame.getContentPane().add(afterDiscount);

@@ -14,6 +14,7 @@ import javax.swing.border.BevelBorder;
 
 import Model.CartItem;
 import Model.Product;
+import Model.Employee.Barista;
 import Model.Employee.Employee;
 import Model.Employee.ProductAdmin;
 import Session.LoginSession;
@@ -168,6 +169,12 @@ public class ProductManagementForm {
 		stock.setBounds(184, 198, 385, 31);
 		panel.add(stock);
 		
+		if(LoginSession.getSession() instanceof Barista) {
+			name.setEditable(false);
+			description.setEditable(false);
+			price.setEditable(false);
+			stock.setEditable(false);
+		}
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(62, 242, 545, 115);
 		panel.add(panel_2);
@@ -258,7 +265,7 @@ public class ProductManagementForm {
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					if(productId!=0) {
-						int quantity=Integer.parseInt(JOptionPane.showInputDialog("How much do you want to add?"));
+						int quantity=Integer.parseInt(JOptionPane.showInputDialog("How much do you want to add?", "0"));
 						CartItem item =CartController.addToCart(productId, quantity);
 						String message="Item Failed to add to Cart";
 						if(item != null) {
